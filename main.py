@@ -26,7 +26,7 @@ def readAudio(audio):
     return(amp, fs, n, t)
 
 ### automatic download of files from a folder
-path = r'1.wav'              ## main path "/content/"
+path = r'data'              ## main path "/content/"
 files = os.listdir(path)
 
 for filename in files:
@@ -62,9 +62,9 @@ plt.show()
 # Sample values and sample rate
 
 S = librosa.feature.melspectrogram(y=amp*1.0, sr=fs, n_fft=frame_length, hop_length=overlap, power=1.0)
-fig = plt.figure(figsize=(10,4))
+fig = plt.figure(figsize=(10, 4))
 
-librosa.display.specshow(librosa.power_to_db(S,ref=np.max), y_axis='mel', fmax=8000, x_axis='time')
+librosa.display.specshow(librosa.power_to_db(S, ref=np.max), y_axis='mel', fmax=8000, x_axis='time')
 plt.colorbar(format='%+2.0f dB')
 plt.title('Mel spectrogram')
 plt.tight_layout()
@@ -79,6 +79,7 @@ plt.title('Mel spectrogram')
 plt.tight_layout()
 
 print(librosa.power_to_db(S,ref=np.max).shape)
+
 import numpy as np
 
 dS = np.gradient(librosa.power_to_db(S,ref=np.max), axis=0)
@@ -86,9 +87,8 @@ dS.shape
 ddS = np.gradient(dS, axis=0)
 # this code calculates the first and second derivative of the image converted to decibels
 
-img = cv2.resize(dS,(64,64))
+img = cv2.resize(dS, (64, 64))
 librosa.display.specshow(img, y_axis='mel', fmax=8000, x_axis='time')
 plt.colorbar(format='%+2.0f dB')
 plt.title('Mel spectrogram')
 plt.tight_layout()
-

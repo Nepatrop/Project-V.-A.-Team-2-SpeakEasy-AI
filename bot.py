@@ -20,15 +20,16 @@ def start(message):
 
 @bot.message_handler(regexp='предоставить запись')
 def record(message):
-    bot.send_message(message.chat.id, 'Предоставьте следующим сообщением необходимую запись.')
+    bot.send_message(message.chat.id, 'Предоставьте следующим сообщением запись.')
 
 
     @bot.message_handler(content_types=['voice', 'text'])
     def treatment(record):
         file_info = bot.get_file(record.voice.file_id)
+        print(file_info)
         file = requests.get('https://api.telegram.org/file/bot{0}/{1}'.format(token, file_info.file_path))
 
-        with open('voice.wav', 'wb') as f:
+        with open('data/voice.wav', 'wb') as f:
             f.write(file.content)
 
         bot.send_message(record.chat.id, 'Обработка…')
