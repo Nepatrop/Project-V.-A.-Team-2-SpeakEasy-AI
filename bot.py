@@ -19,7 +19,7 @@ def start(message):
 
 
 @bot.message_handler(regexp='предоставить запись')
-def record(message):
+def next_record(message):
     bot.send_message(message.chat.id, 'Предоставьте следующим сообщением запись.')
 
 
