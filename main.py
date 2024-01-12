@@ -104,7 +104,7 @@ Y = Features['labels'].values
 
 
 encoder = OneHotEncoder()
-Y = encoder.fit_transform(np.array(Y).reshape(-1,1)).toarray()
+Y = encoder.fit_transform(np.array(Y).reshape(-1, 1)).toarray()
 
 
 x_train, x_test, y_train, y_test = train_test_split(X, Y, random_state=0, shuffle=True)
@@ -158,7 +158,6 @@ test_loss = history.history['val_loss']
 
 pred_test = model.predict(x_test)
 y_pred = encoder.inverse_transform(pred_test)
-print(y_pred)
 y_test = encoder.inverse_transform(y_test)
 
 print(classification_report(y_test, y_pred))
