@@ -7,7 +7,6 @@ import seaborn as sns
 
 import os
 import pandas as pd
-#from IPython.display import Audio
 import tensorflow as tf
 
 from tensorflow.keras.callbacks import ReduceLROnPlateau
@@ -27,8 +26,8 @@ from keras.utils import to_categorical
 from keras.callbacks import ModelCheckpoint
 
 
-pathDisorfer = "data/DataSets/Disorder Voices/" ## put the right directory
-pathNormal = "data/DataSets/Normal Voices/" ## put the right directory
+pathDisorfer = "data/DataSets/Disorder Voices/"
+pathNormal = "data/DataSets/Normal Voices/"
 
 
 voicePathDirs = os.listdir(pathDisorfer)
@@ -55,37 +54,13 @@ voiceData_df.to_csv("voiceData_df.csv", index=False)
 voiceData_df.head()
 
 
-def create_waveplot(data, sr, e):
-    plt.figure(figsize=(10, 3))
-    plt.title('Waveplot for audio {} voice'.format(e), size=15)
-    librosa.display.waveshow(data, sr=sr)
-    plt.show()
-
-def create_spectrogram(data, sr, e):
-    # stft function converts the data into short term fourier transform
-    X = librosa.stft(data)
-    Xdb = librosa.amplitude_to_db(abs(X))
-    plt.figure(figsize=(12, 3))
-    plt.title('Spectrogram for audio {} voice'.format(e), size=15)
-    librosa.display.specshow(Xdb, sr=sr, x_axis='time', y_axis='hz')
-    #librosa.display.specshow(Xdb, sr=sr, x_axis='time', y_axis='log')
-    plt.colorbar()
-
-
 typeVoice = 'pathology'
-path = np.array(voiceData_df.Path[voiceData_df.Voices==typeVoice])[1]
+path = np.array(voiceData_df.Path[voiceData_df.Voices == typeVoice])[1]
 data, sampling_rate = librosa.load(path)
-#create_waveplot(data, sampling_rate, typeVoice)
-#create_spectrogram(data, sampling_rate, typeVoice)
-#Audio(path)
 
 
 typeVoice = 'normal'
 path = np.array(voiceData_df.Path[voiceData_df.Voices == typeVoice])[1]
-data, sampling_rate = librosa.load(path)
-#create_waveplot(data, sampling_rate, typeVoice)
-#create_spectrogram(data, sampling_rate, typeVoice)
-#Audio(path)
 
 
 def extract_features(data, sample_rate):
@@ -106,7 +81,7 @@ def get_features(path):
 
 X, Y = [], []
 for path, voice in zip(voiceData_df.Path, voiceData_df.Voices):
-    if (librosa.get_duration(path=path)!= 0):
+    if librosa.get_duration(path=path) != 0:
         feature = get_features(path)
         for ele in feature:
             X.append(ele)
@@ -124,7 +99,7 @@ Features.to_csv('features.csv', index=False)
 Features.head()
 
 
-X = Features.iloc[: ,:-1].values
+X = Features.iloc[:, :-1].values
 Y = Features['labels'].values
 
 
@@ -133,18 +108,15 @@ Y = encoder.fit_transform(np.array(Y).reshape(-1,1)).toarray()
 
 
 x_train, x_test, y_train, y_test = train_test_split(X, Y, random_state=0, shuffle=True)
-x_train.shape, y_train.shape, x_test.shape, y_test.shape
 
 
 scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
-x_train.shape, y_train.shape, x_test.shape, y_test.shape
 
 
 x_train = np.expand_dims(x_train, axis=2)
 x_test = np.expand_dims(x_test, axis=2)
-x_train.shape, y_train.shape, x_test.shape, y_test.shape
 
 
 model = Sequential()
@@ -186,7 +158,7 @@ test_loss = history.history['val_loss']
 
 pred_test = model.predict(x_test)
 y_pred = encoder.inverse_transform(pred_test)
-
+print(y_pred)
 y_test = encoder.inverse_transform(y_test)
 
 print(classification_report(y_test, y_pred))

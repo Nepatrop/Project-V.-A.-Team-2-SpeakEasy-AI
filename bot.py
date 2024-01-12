@@ -3,6 +3,7 @@ import requests
 import random
 from dotenv import load_dotenv
 import os
+import model_classification
 
 load_dotenv()
 token = os.getenv('TOKEN')
@@ -39,16 +40,17 @@ def model_processing(file_info, chat_id):
 
     bot.send_message(chat_id, 'Обработка…')
 
-    resp = random.randint(1, 3)
-    normal = 'Аудиозапись содержит нормальную русскую речь.'
-    notNormal = 'Аудиофайл содержит ненормальную русскую речь.'
-    nothing = 'Не удалось проанализировать предоставленный файл.'
-    if resp == 1:
-        bot.send_message(chat_id, normal)
-    elif resp == 2:
-        bot.send_message(chat_id, notNormal)
-    else:
-        bot.send_message(chat_id, nothing)
+    result = model_classification.start()
+    print(result)
+
+
+
+    #if result[0] < result[1]:
+    #    bot.send_message(chat_id, 'Аудиозапись содержит нормальную русскую речь.')
+    #elif result[0] > result[1]:
+    #    bot.send_message(chat_id, 'Аудиофайл содержит ненормальную русскую речь.')
+    #else:
+    #    bot.send_message(chat_id, 'Не удалось проанализировать предоставленный файл.')
 
     bot.send_message(chat_id,
                      'Для отправки ещё одного запроса с повторным или новым голосовым сообщением нажмите "Предоставить запись".')
