@@ -1,2 +1,4 @@
-.env
-data
+/.env
+/data/DataSets/Disorder Voices
+/data/DataSets/Normal Voices
+users/
