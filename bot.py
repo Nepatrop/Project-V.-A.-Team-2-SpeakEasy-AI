@@ -45,11 +45,10 @@ def next_record(message):
 
 
 def model_processing(file_info, chat_id):
-    downloaded_file = bot.download_file(file_info.file_path)
     path = f'data/users/{chat_id}'
     os.makedirs(path, exist_ok=True)
     with open(path + f'/{chat_id}.wav', 'wb') as f:
-        f.write(downloaded_file)
+        f.write(bot.download_file(file_info.file_path))
 
     prediction_values = model_classification.start(path + f'/{chat_id}.wav').ravel().tolist()
     discrepancy = prediction_values[1] - prediction_values[0]

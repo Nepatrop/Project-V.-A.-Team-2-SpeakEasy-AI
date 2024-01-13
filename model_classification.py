@@ -8,9 +8,9 @@ from sklearn.preprocessing import OneHotEncoder
 
 model = keras.models.load_model('Voice-Classification-Model.keras')
 
+
 def start(path):
-    predictions = model.predict(preprocess_audio(path))
-    return predictions
+    return model.predict(preprocess_audio(path))
 
 
 def preprocess_audio(audio_file):
