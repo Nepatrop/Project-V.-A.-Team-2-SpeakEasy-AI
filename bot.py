@@ -51,14 +51,13 @@ def model_processing(file_info, chat_id):
         f.write(bot.download_file(file_info.file_path))
 
     prediction_values = model_classification.start(path + f'/{chat_id}.wav').ravel().tolist()
-    discrepancy = prediction_values[1] - prediction_values[0]
-    print(discrepancy)
+    print(prediction_values[1])
 
-    if (discrepancy < 0.393) and (discrepancy > -0.4):
+    if (prediction_values[1] > 0.3) and (prediction_values[1] < 0.72):
         bot.send_message(chat_id, 'Аудиозапись содержит нормальную русскую речь.')
-    elif discrepancy > 0.393:
+    elif prediction_values[1] > 0.72:
         bot.send_message(chat_id, 'Аудиофайл содержит ненормальную русскую речь.')
-    elif discrepancy < -0.4:
+    elif prediction_values[1] < 0.3:
         bot.send_message(chat_id, 'Не удалось проанализировать предоставленный файл.')
 
     data_loader()
