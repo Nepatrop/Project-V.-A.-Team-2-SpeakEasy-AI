@@ -2,7 +2,7 @@
   
 Разработчик чат-бота, аналитик:  
 Акулов Данила – https://t.me/nepatrop  
-Аналитик, сценарист чат-бота:  
+Разработчик, сценарист чат-бота:  
 Эльавади Ахмед Махмуд Авад – https://github.com/AhmedElawady74  
 Разработчики нейросети:  
 Малыгина Софья – https://t.me/basmill  
@@ -15,7 +15,7 @@ This project is a trained model. With its help, using a telegram bot, the model 
   
 Chatbot developer, analyst:  
 Akulov Danila - https://t.me/nepatrop  
-Analyst, chatbot scriptwriter:  
+Developer, chatbot scriptwriter:  
 Elawady Ahmed Mahmoud Awad - https://github.com/AhmedElawady74  
 Neural network developers:  
 Malygina Sofia - https://t.me/basmill  
